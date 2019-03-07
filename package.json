@@ -1,0 +1,32 @@
+{
+  "name": "flutterapibykoa",
+  "version": "1.0.0",
+  "description": "api write by node and koa",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chenshi901228/flutterApiByKoa.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/chenshi901228/flutterApiByKoa/issues"
+  },
+  "homepage": "https://github.com/chenshi901228/flutterApiByKoa#readme",
+  "dependencies": {
+    "jsonwebtoken": "^8.5.0",
+    "koa": "^2.7.0",
+    "koa-body": "^4.0.8",
+    "koa-jwt": "^3.5.1",
+    "koa-logger": "^3.2.0",
+    "koa-router": "^7.4.0",
+    "koa2-cors": "^2.0.6",
+    "moment": "^2.24.0",
+    "mysql2": "^1.6.5",
+    "sequelize": "^4.43.0"
+  }
+}
