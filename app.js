@@ -27,7 +27,7 @@ app.use(Cors({
     maxAge: 5,
     credentials: true,
     allowMethods: ['GET', 'POST', 'DELETE'],
-    allowHeaders: ['Content-Type', 'Authorization', 'Accept'],
+    allowHeaders: ['Content-Type', 'Authorization', 'Accept', "Access-Control-Allow-Origin"],
 }))
 // 请求日志
 app.use(logger((str, args) => {
@@ -59,4 +59,4 @@ routes.map(item => {
     app.use(item.routes(), router.allowedMethods())
 })
 // 监听端口
-app.listen(3000);
+app.listen(3001);

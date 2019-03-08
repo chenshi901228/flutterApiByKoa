@@ -4,7 +4,8 @@ const jwt = require('jsonwebtoken')
 
 
 module.exports.login = async function (data) {
-    let res = await Admin.findAll({ where: JSON.parse(data), raw: true })
+    let database = (typeof data) == "" ? JSON.parse(data) : data
+    let res = await Admin.findAll({ where: database, raw: true })
         .then(res => { return res })
         .catch(error => { return error })
     if (res.length) {
@@ -15,7 +16,8 @@ module.exports.login = async function (data) {
         return {
             token: token,
             code: 1,
-            msg: "登录成功"
+            msg: "登录成功",
+            phone: res[0].phone,
         }
     } else {
         return {
@@ -26,6 +28,7 @@ module.exports.login = async function (data) {
     }
 }
 module.exports.reg = async function (data) {
+    // let database = (typeof data) == "" ? JSON.parse(data) : data
     let res_find = await Admin.findAll({ where: { phone: JSON.parse(data).phone }, raw: true })
         .then(res => { return res })
     if (res_find.length) {
@@ -53,5 +56,44 @@ module.exports.reg = async function (data) {
             }
         }
         return result
+    }
+}
+
+module.exports.getList = async function (data) {
+    let list = await Admin.findAll({ raw: true }).then((res) => {
+        return res
+    })
+    return {
+        code: 1,
+        list
+    }
+}
+module.exports.edit = async function (data) {
+    let res = await Admin.update({ nick_name: data.nick_name, password: data.password }, { where: { id: data.id } })
+    if (res[0]) {
+        return {
+            code: 1,
+            msg: "修改信息成功"
+        }
+    } else {
+        return {
+            code: 0,
+            msg: "修改信息失败"
+        }
+    }
+}
+
+module.exports.deleteOne = async function ({ id } = data) {
+    let res = await Admin.destroy({ where: { id } })
+    if (res[0]) {
+        return {
+            code: 1,
+            msg: "删除用户成功"
+        }
+    } else {
+        return {
+            code: 0,
+            msg: "删除用户失败"
+        }
     }
 }
