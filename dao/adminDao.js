@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken')
 
 
 module.exports.login = async function (data) {
-    let database = (typeof data) == "" ? JSON.parse(data) : data
+    let database = (typeof data) == "string" ? JSON.parse(data) : data
     let res = await Admin.findAll({ where: database, raw: true })
         .then(res => { return res })
         .catch(error => { return error })
@@ -18,6 +18,7 @@ module.exports.login = async function (data) {
             code: 1,
             msg: "登录成功",
             phone: res[0].phone,
+            id: res[0].id
         }
     } else {
         return {
@@ -28,14 +29,15 @@ module.exports.login = async function (data) {
     }
 }
 module.exports.reg = async function (data) {
-    // let database = (typeof data) == "" ? JSON.parse(data) : data
-    let res_find = await Admin.findAll({ where: { phone: JSON.parse(data).phone }, raw: true })
+    let database = (typeof data) == "string" ? JSON.parse(data) : data
+    let res_find = await Admin.findAll({ where: { phone: database.phone }, raw: true })
         .then(res => { return res })
+        .catch(error => { return error })
     if (res_find.length) {
         return { msg: "用户已存在", code: 0 }
     } else {
         let result
-        let res_create = await Admin.create(JSON.parse(data))
+        let res_create = await Admin.create(database)
             .then(res => { return res.get({ plain: true }) })
             .catch(error => { return error })
         if (res_create) {
@@ -85,7 +87,8 @@ module.exports.edit = async function (data) {
 
 module.exports.deleteOne = async function ({ id } = data) {
     let res = await Admin.destroy({ where: { id } })
-    if (res[0]) {
+    console.log(res)
+    if (res) {
         return {
             code: 1,
             msg: "删除用户成功"
