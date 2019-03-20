@@ -16,7 +16,8 @@ const ClassifyRouter = require('./routes/classify')
 const UpLoadRouter = require('./routes/upLoad')
 const StoreRouter = require('./routes/store')
 const GoodsRouter = require('./routes/goods')
-const HomeBanner = require('./routes/homeBanner')
+const HomeBannerRouter = require('./routes/homeBanner')
+const ShoppingCartRouter = require('./routes/shoppingCart')
 // 添加路由
 const routes = [
     AdminRouter,
@@ -25,7 +26,8 @@ const routes = [
     UpLoadRouter,
     StoreRouter,
     GoodsRouter,
-    HomeBanner,
+    HomeBannerRouter,
+    ShoppingCartRouter
 ]
 
 
