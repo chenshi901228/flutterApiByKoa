@@ -11,10 +11,12 @@ module.exports.initAddGoods = async function (adminId) {
     console.log(adminId)
     let storeList = await Store.findAll({ where: adminId, raw: true })
     let classifyList = await Classify.findAll({ raw: true })
+    let goodsList = await Goods.findAll({ raw: true })
     return {
         code: 1,
         storeList,
-        classifyList
+        classifyList,
+        goodsList
     }
 }
 module.exports.addGoods = async function (goods) {

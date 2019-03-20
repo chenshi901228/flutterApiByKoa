@@ -16,6 +16,7 @@ const ClassifyRouter = require('./routes/classify')
 const UpLoadRouter = require('./routes/upLoad')
 const StoreRouter = require('./routes/store')
 const GoodsRouter = require('./routes/goods')
+const HomeBanner = require('./routes/homeBanner')
 // 添加路由
 const routes = [
     AdminRouter,
@@ -24,6 +25,7 @@ const routes = [
     UpLoadRouter,
     StoreRouter,
     GoodsRouter,
+    HomeBanner,
 ]
 
 
@@ -61,7 +63,7 @@ app.use((ctx, next) => {
 app.use(static("uploads/"))
 // token验证
 app.use(koajwt({ secret: "my_token" }).unless({
-    path: [/\/admin\/login/, /\/admin\/reg/, /\/test/]
+    path: [/\/admin\/login/, /\/admin\/reg/]
 }))
 
 
