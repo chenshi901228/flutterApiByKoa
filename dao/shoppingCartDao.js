@@ -71,7 +71,7 @@ module.exports.edit = async function (params) {
 module.exports.deleteOne = async function (params) {
     const data = (typeof params) == "string" ? JSON.parse(params) : params
     console.log(data)
-    const res = await ShoppingCart.destroy({ where: { id: { [Op.in]: data.listId } } })
+    const res = await ShoppingCart.destroy({ where: { id: { [Op.in]: data.shoppingCartId } } })
     if (res) {
         return {
             code: 1,
