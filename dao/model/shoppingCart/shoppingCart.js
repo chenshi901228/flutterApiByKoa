@@ -9,6 +9,7 @@ const ShoppingCart = db.defineModel("shoppingCart", {
         allowNull: false,
         defaultValue: 1
     },
+    sizeId: Sequelize.INTEGER
 })
 
 ShoppingCart.sync().then(res => { })

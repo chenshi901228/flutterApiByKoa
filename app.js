@@ -10,6 +10,8 @@ const app = new Koa();
 const router = new Router();
 
 // 路由设置
+const TestRouter = require('./routes/test')
+
 const AdminRouter = require('./routes/admin')
 const InitHomePageRouter = require('./routes/initHomePage')
 const ClassifyRouter = require('./routes/classify')
@@ -27,7 +29,8 @@ const routes = [
     StoreRouter,
     GoodsRouter,
     HomeBannerRouter,
-    ShoppingCartRouter
+    ShoppingCartRouter,
+    TestRouter
 ]
 
 
@@ -65,7 +68,7 @@ app.use((ctx, next) => {
 app.use(static("uploads/"))
 // token验证
 app.use(koajwt({ secret: "my_token" }).unless({
-    path: [/\/admin\/login/, /\/admin\/reg/]
+    path: [/\/admin\/login/, /\/admin\/reg/,/\/test/]
 }))
 
 
