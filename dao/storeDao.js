@@ -4,6 +4,8 @@ const Op = Sequelize.Op;
 const Store = require('./model/store/store')
 const Admin = require('./model/admin/admin')
 const Image = require('./model/classify/images')
+const Goods = require('./model/goods/goods')
+const Size = require('./model/goods/size')
 
 
 module.exports.addStore = async function (store) {
@@ -61,6 +63,47 @@ module.exports.storeList = async function (adminId) {
         item.storeBannerImgs = storeBannerImgs
         return item
     }))
+    return {
+        code: 1,
+        list
+    }
+}
+module.exports.storeDetails = async function (params) {
+    const {storeId} = (typeof params) == "string" ? JSON.parse(params) : params
+    let list = {}
+    const res_store = await Store.findOne({ where: { id: storeId } })
+    const storeBannerImgs = await Image.findOne({
+        where: {
+            belongId: storeId,
+            type: "storeBannerImg"
+        }, raw: true
+    })
+    const storelogoImg = await Image.findOne({
+        where: {
+            belongId: storeId,
+            type: "storelogoImg"
+        }, raw: true
+    })
+    const res_goods = await Goods.findAll({ where: { store: res_store.storeName }, raw: true })
+    const goodsList = await Promise.all(
+        res_goods.map(async item => {
+            const goodsImg = await Image.findOne({
+                where: {
+                    belongId: item.id,
+                    type: "goodsImg"
+                }, raw: true
+            })
+            const goodsPrice = await Size.findOne({ where: { goodsId: item.id }, raw: true })
+            item.goodsImg = goodsImg.url.replace("localhost:3001\\","192.168.56.1:3001/")
+            item.price = goodsPrice.price
+            return item
+        })
+    )
+    list.storeName = res_store.storeName
+    list.description = res_store.description
+    list.storeBannerImgs = storeBannerImgs.url.replace("localhost:3001\\","192.168.56.1:3001/")
+    list.storelogoImg = storelogoImg.url.replace("localhost:3001\\","192.168.56.1:3001/")
+    list.goodsList = goodsList
     return {
         code: 1,
         list
