@@ -1,6 +1,7 @@
 
 const Admin = require('./model/admin/admin')
 const jwt = require('jsonwebtoken')
+const UserInfo = require('./model/admin/userInfo')
 
 
 module.exports.login = async function (data) {
@@ -41,6 +42,7 @@ module.exports.reg = async function (data) {
             .then(res => { return res.get({ plain: true }) })
             .catch(error => { return error })
         if (res_create) {
+            await UserInfo.create({ userId: res_create.id })
             const token = jwt.sign({
                 phone: res_create.phone,
                 id: res_create.id
@@ -98,5 +100,15 @@ module.exports.deleteOne = async function ({ id } = data) {
             code: 0,
             msg: "删除用户失败"
         }
+    }
+}
+
+
+module.exports.getUserInfo = async function (params) {
+    const { userId } = (typeof params) == "string" ? JSON.parse(params) : params
+    const res_userInfo = await UserInfo.findOne({ where: { userId }, raw: true })
+    return {
+        code: 1,
+        userInfo: res_userInfo
     }
 }

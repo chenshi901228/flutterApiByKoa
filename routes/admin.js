@@ -3,7 +3,7 @@ const router = new Router();
 
 const baseUrl = "/admin"
 
-const { login, reg, getList, edit, deleteOne } = require('../dao/adminDao')
+const { login, reg, getList, edit, deleteOne, getUserInfo } = require('../dao/adminDao')
 
 router.post(baseUrl + '/login', async (ctx) => {
     ctx.body = await login(ctx.request.body)
@@ -19,5 +19,8 @@ router.post(baseUrl + '/edit', async (ctx) => {
 })
 router.post(baseUrl + '/deleteOne', async (ctx) => {
     ctx.body = await deleteOne(ctx.request.body)
+})
+router.post(baseUrl + '/userInfo', async (ctx) => {
+    ctx.body = await getUserInfo(ctx.request.body)
 })
 module.exports = router
