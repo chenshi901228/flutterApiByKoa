@@ -9,11 +9,14 @@
 </head>
 
 <body>
-    <input class="price" type="text">
-    <button>click</button>
+    <!-- <form action="localhost:3001/singleUpLoad"> -->
+    <input type="file" name="" id="" onchange="uploadFile(this)">
+    <!-- <input type="submit" value="click"> -->
+    <!-- </form> -->
     <script>
-        const str = "localhost:3001\\\\"
-        console.log(str.replace("\\\\","/"))
+        function uploadFile(obj) {
+            console.log(obj.files)
+        }
     </script>
 </body>
 

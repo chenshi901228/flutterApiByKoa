@@ -107,8 +107,27 @@ module.exports.deleteOne = async function ({ id } = data) {
 module.exports.getUserInfo = async function (params) {
     const { userId } = (typeof params) == "string" ? JSON.parse(params) : params
     const res_userInfo = await UserInfo.findOne({ where: { userId }, raw: true })
+    const res_admin = await Admin.findOne({ where: { id: userId }, raw: true })
+    res_userInfo.phone = res_admin.phone
     return {
         code: 1,
         userInfo: res_userInfo
+    }
+}
+module.exports.editNickName = async function (params) {
+    const user = (typeof params) == "string" ? JSON.parse(params) : params
+    const res_userInfo = await UserInfo.update({
+        nick_name: user.nick_name
+    }, { where: { userId: user.userId } })
+    if (res_userInfo[0]) {
+        return {
+            code: 1,
+            msg: "修改昵称成功"
+        }
+    } else {
+        return {
+            code: 0,
+            msg: "修改昵称失败"
+        }
     }
 }

@@ -60,5 +60,5 @@ const UserInfo = db.defineModel("userinfo", {
     }
 })
 
-UserInfo.sync({ alter: true }).then(res => { })
+UserInfo.sync().then(res => { })
 module.exports = UserInfo
